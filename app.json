@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "find-my-package",
+    "slug": "find-my-package",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "find-my-package"
+}
