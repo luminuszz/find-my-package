@@ -1,5 +1,8 @@
 import React from 'react';
 
+import PackageIcon from '../../assets/Package.svg';
+import { Package } from '../../services/database/package.repository';
+
 import {
   Container,
   Content,
@@ -11,17 +14,25 @@ import {
   FooterDetails,
   Icon,
   Name,
+  PackAgeDetails,
 } from './styles';
 
-export const PackageCard: React.FC = () => (
+interface Props {
+  packageData: Package;
+}
+
+export const PackageCard: React.FC<Props> = ({ packageData }) => (
   <Container>
     <Content>
       <Info>
-        <PackageName>Pacote 1</PackageName>
-        <DepartureDate> 01/12/2021</DepartureDate>
+        <PackAgeDetails>
+          <PackageIcon width={24} height={24} />
+          <PackageName>{packageData.code}</PackageName>
+        </PackAgeDetails>
+        <DepartureDate> {packageData.departureData}</DepartureDate>
       </Info>
 
-      <Status>Entregue</Status>
+      <Status>{packageData.status}</Status>
     </Content>
 
     <Footer>

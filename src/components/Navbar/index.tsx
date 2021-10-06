@@ -1,5 +1,7 @@
 import React from 'react';
 
+import LocaleIcon from '../../assets/locale.svg';
+import LogoutIcon from '../../assets/logout.svg';
 import {
   Container,
   Content,
@@ -11,6 +13,7 @@ import {
   PageContent,
   Title,
   Locale,
+  LocaleDetails,
 } from './styles';
 
 interface Props {
@@ -26,12 +29,17 @@ export const Navbar: React.FC<Props> = ({ pageTitle }) => (
           <UserName>Davi Ribeiro</UserName>
         </UserInfo>
 
-        <LogoutMessage>Sair</LogoutMessage>
+        <LogoutMessage>
+          <LogoutIcon />
+        </LogoutMessage>
       </UserDetails>
 
       <PageContent>
         <Title>{pageTitle}</Title>
-        <Locale>Salvador, BA</Locale>
+        <LocaleDetails>
+          <LocaleIcon />
+          <Locale>Salvador, BA</Locale>
+        </LocaleDetails>
       </PageContent>
     </Content>
   </Container>

@@ -2,8 +2,9 @@ import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 
 export const Container = styled.View`
-  width: ${Dimensions.get('window').width - 40}px;
+  width: ${Dimensions.get('window').width - 60}px;
   height: 184px;
+  margin-bottom: 25px;
 
   background-color: ${({ theme }) => theme.colors.white};
 
@@ -22,10 +23,16 @@ export const Info = styled.View`
   align-items: center;
 `;
 
+export const PackAgeDetails = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
 export const PackageName = styled.Text`
+  margin-left: 14px;
   font-family: ${({ theme }) => theme.fonts.robotoCondensed.bold};
   color: ${({ theme }) => theme.colors.gray500};
-  font-size: ${({ theme }) => theme.utils.RFValue(22)};
+  font-size: ${({ theme }) => theme.utils.RFValue(18)};
 `;
 
 export const DepartureDate = styled.Text`
@@ -37,8 +44,8 @@ export const DepartureDate = styled.Text`
 export const Status = styled.Text`
   margin-top: 32px;
 
-  color: ${({ theme }) => theme.colors.green500};
-  font-size: ${({ theme }) => theme.utils.RFValue(15)};
+  color: ${({ theme }) => theme.colors.gray400};
+  font-size: ${({ theme }) => theme.utils.RFValue(12)};
   text-align: center;
 `;
 

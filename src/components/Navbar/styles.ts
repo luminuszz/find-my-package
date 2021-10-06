@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { RectButton } from 'react-native-gesture-handler';
 
 export const Container = styled.View`
   height: 228px;
@@ -31,10 +32,8 @@ export const UserName = styled.Text`
   font-size: ${({ theme }) => theme.utils.RFValue(15)};
 `;
 
-export const LogoutMessage = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.inter.bold};
-  color: ${({ theme }) => theme.colors.purple300};
-  font-size: ${({ theme }) => theme.utils.RFValue(15)};
+export const LogoutMessage = styled(RectButton)`
+  padding: 5px;
 `;
 
 export const PageContent = styled.View`
@@ -50,7 +49,13 @@ export const Title = styled.Text`
   font-size: ${({ theme }) => theme.utils.RFValue(32)};
 `;
 
+export const LocaleDetails = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
 export const Locale = styled.Text`
+  margin-left: 13px;
   font-family: ${({ theme }) => theme.fonts.inter.regular};
   color: ${({ theme }) => theme.colors.purple300};
   font-size: ${({ theme }) => theme.utils.RFValue(15)};
