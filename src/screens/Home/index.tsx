@@ -21,6 +21,7 @@ import {
   packageRepository,
 } from '../../services/database/package.repository';
 import { useNotifications } from '../../hooks/useNotifications';
+import { Navbar } from '../../components/Navbar';
 
 export const Home: React.FC = () => {
   const [input, setInput] = useState('');
@@ -60,40 +61,36 @@ export const Home: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    schedulePushNotification({
-      content: {
-        title: 'hello word',
-      },
-      trigger: { seconds: 1 },
-    });
-  }, []);
-
   return (
-    <Container>
-      <Content>
-        <InputField onTouchStart={() => inputRef.current?.focus()}>
-          <Input
-            ref={inputRef}
-            placeholder="Anexar entrega"
-            value={input}
-            onChangeText={(value) => setInput(value)}
+    <>
+      <Navbar pageTitle="Entregas" />
+      <Container>
+        <Content>
+          <InputField onTouchStart={() => inputRef.current?.focus()}>
+            <Input
+              ref={inputRef}
+              placeholder="Anexar entrega"
+              value={input}
+              onChangeText={(value) => setInput(value)}
+            />
+            <InputButton onPress={handleSubmit}>
+              <FindIcon />
+            </InputButton>
+          </InputField>
+
+          <PackageCount>
+            {packages.length
+              ? `${packages.length} pacote (s)`
+              : 'Não há pacotes'}
+          </PackageCount>
+
+          <PackageList
+            keyExtractor={(item) => item.id}
+            data={packages}
+            renderItem={({ item }) => <PackageCard packageData={item} />}
           />
-          <InputButton onPress={handleSubmit}>
-            <FindIcon />
-          </InputButton>
-        </InputField>
-
-        <PackageCount>
-          {packages.length ? `${packages.length} pacote (s)` : 'Não há pacotes'}
-        </PackageCount>
-
-        <PackageList
-          keyExtractor={(item) => item.id}
-          data={packages}
-          renderItem={({ item }) => <PackageCard packageData={item} />}
-        />
-      </Content>
-    </Container>
+        </Content>
+      </Container>
+    </>
   );
 };
