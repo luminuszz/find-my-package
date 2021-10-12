@@ -14,6 +14,7 @@ type NotificationContextValue = {
   schedulePushNotification: (
     request: NotificationRequestInput,
   ) => Promise<void>;
+  expoPushToken: string;
 };
 
 const NotificationContext = createContext<NotificationContextValue>(
@@ -45,7 +46,6 @@ const NotificationsProvider: React.FC = ({ children }) => {
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
     } else {
       alert('Must use physical device for Push Notifications');
     }
@@ -86,7 +86,9 @@ const NotificationsProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <NotificationContext.Provider value={{ schedulePushNotification }}>
+    <NotificationContext.Provider
+      value={{ schedulePushNotification, expoPushToken }}
+    >
       {children}
     </NotificationContext.Provider>
   );

@@ -26,6 +26,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'consistent-return': 'off',
     'no-shadow': 'off',
+    'react/jsx-props-no-spreading': 'off',
     camelcase: 'off',
   },
 };

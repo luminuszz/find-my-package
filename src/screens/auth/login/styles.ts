@@ -56,3 +56,11 @@ export const SubTitle = styled.Text`
   font-size: ${({ theme }) => theme.utils.RFValue(15)};
   line-height: 25px;
 `;
+
+interface FormContentStyleProps {
+  keyboardIsOpen: boolean;
+}
+
+export const FormContent = styled.View<FormContentStyleProps>`
+  margin-top: ${(props) => (props.keyboardIsOpen ? 32 : 64)}px;
+`;
