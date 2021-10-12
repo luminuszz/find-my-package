@@ -1,5 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Keyboard } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+import BackGroundImage from '../../../assets/backgroundImgage.svg';
+import Logotipo from '../../../assets/Logotipo.svg';
+import Logo from '../../../assets/Logo.svg';
+import UserICon from '../../../assets/cpf_icon.svg';
+import LockIcon from '../../../assets/lockIcon.svg';
+
+import { Input } from '../../../components/form/Input';
+import { PasswordInput } from '../../../components/form/PasswordInput';
+import { Checkbox } from '../../../components/form/Checkbox';
 
 import {
   Container,
@@ -12,25 +23,21 @@ import {
   SubTitle,
   Content,
   FormContent,
+  ActionsForm,
+  ForgotPassword,
 } from './styles';
-
-import BackGroundImage from '../../../assets/backgroundImgage.svg';
-import Logotipo from '../../../assets/Logotipo.svg';
-import Logo from '../../../assets/Logo.svg';
-import UserICon from '../../../assets/cpf_icon.svg';
-import LockIcon from '../../../assets/lockIcon.svg';
-
-import { Input } from '../../../components/form/Input';
-import { PasswordInput } from '../../../components/form/PasswordInput';
+import { Button } from '../../../components/Button';
 
 export const Login: React.FC = () => {
+  const navigation = useNavigation<StackRoute.Public<'Login'>>();
   const [isKeyboardOpen, setIsKeyBoardOpen] = useState(false);
   const [form, setForm] = useState({
     cpf: '',
     password: '',
+    remember: false,
   });
 
-  const handleChange = (name: string, value: string) =>
+  const handleChange = (name: keyof typeof form, value: any) =>
     setForm((old) => ({ ...old, [name]: value }));
 
   useEffect(() => {
@@ -80,6 +87,20 @@ export const Login: React.FC = () => {
             placeholder="Senha"
             keyboardType="default"
           />
+
+          <ActionsForm>
+            <Checkbox
+              value={form.remember}
+              onChangeValue={(value) => handleChange('remember', value)}
+            />
+            <ForgotPassword
+              onPress={() => navigation.navigate('PasswordInput')}
+            >
+              Esqueci minha senha
+            </ForgotPassword>
+          </ActionsForm>
+
+          <Button>Entrar</Button>
         </FormContent>
       </Content>
     </Container>

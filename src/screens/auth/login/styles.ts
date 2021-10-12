@@ -41,9 +41,9 @@ export const FirstWord = styled.Text`
 
 export const SecondMessage = styled.Text`
   margin-top: -15px;
-  font-family: ${({ theme }) => theme.fonts.inter.regular};
   font-weight: 700;
   font-style: italic;
+  font-family: ${({ theme }) => theme.fonts.inter.regular};
   color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.utils.RFValue(40)};
 `;
@@ -63,4 +63,18 @@ interface FormContentStyleProps {
 
 export const FormContent = styled.View<FormContentStyleProps>`
   margin-top: ${(props) => (props.keyboardIsOpen ? 32 : 64)}px;
+`;
+
+export const ActionsForm = styled.View`
+  margin: 24px 0;
+
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const ForgotPassword = styled.Text`
+  color: ${({ theme }) => theme.colors.purple400};
+  font-family: ${({ theme }) => theme.fonts.inter.regular};
+  font-size: ${({ theme }) => theme.utils.RFValue(13)};
 `;

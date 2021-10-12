@@ -15,8 +15,9 @@ export const theme = {
     gray300: '#BEBCCC',
     gray400: '#6F6C80',
     gray500: '#4C4766',
-    purple300: '#D5CCFF',
     purple200: '#F7F5FA',
+    purple300: '#D5CCFF',
+    purple400: '#D4CCFF',
 
     white: '#FFFFFF',
   },

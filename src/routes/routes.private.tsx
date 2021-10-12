@@ -2,7 +2,12 @@ import React from 'react';
 import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 import { Home } from '../screens/Home';
 
-const Stack = createNativeStackNavigator();
+export type RootStackParamList = {
+  Home: undefined;
+  ForgotPassword: undefined;
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const PrivateRoutes: React.FC = () => (
   <Stack.Navigator

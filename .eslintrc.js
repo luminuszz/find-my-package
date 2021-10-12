@@ -27,6 +27,8 @@ module.exports = {
     'consistent-return': 'off',
     'no-shadow': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'no-undef': 'off',
     camelcase: 'off',
+    'require-default-props': 'off',
   },
 };

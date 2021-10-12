@@ -22,7 +22,6 @@ export const PasswordInput: React.FC<Props> = ({ icon: Icon, ...props }) => {
   const [isMaskPassword, setIsMaskPassword] = useState(false);
 
   const onPressPasswordIndicator = () => setIsMaskPassword((old) => !old);
-
   return (
     <Container>
       <Content>
