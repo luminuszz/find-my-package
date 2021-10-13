@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import * as Location from 'expo-location';
 
 import LocaleIcon from '../../assets/locale.svg';
 import LogoutIcon from '../../assets/logout.svg';
@@ -15,32 +16,52 @@ import {
   Locale,
   LocaleDetails,
 } from './styles';
+import { useAuth } from '../../hooks/useAuth';
+import { getCurrentCityByLocation } from '../../services/location';
 
 interface Props {
   pageTitle: string;
 }
 
-export const Navbar: React.FC<Props> = ({ pageTitle }) => (
-  <Container>
-    <Content>
-      <UserDetails>
-        <UserInfo>
-          <Message>Bem vindo,</Message>
-          <UserName>Davi Ribeiro</UserName>
-        </UserInfo>
+export const Navbar: React.FC<Props> = ({ pageTitle }) => {
+  const { user } = useAuth();
+  const [location, setLocation] = useState(null);
 
-        <LogoutMessage>
-          <LogoutIcon />
-        </LogoutMessage>
-      </UserDetails>
+  useEffect(() => {
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        return;
+      }
 
-      <PageContent>
-        <Title>{pageTitle}</Title>
-        <LocaleDetails>
-          <LocaleIcon />
-          <Locale>Salvador, BA</Locale>
-        </LocaleDetails>
-      </PageContent>
-    </Content>
-  </Container>
-);
+      const { coords } = await Location.getCurrentPositionAsync({});
+
+      setLocation(coords);
+    })();
+  }, []);
+
+  return (
+    <Container>
+      <Content>
+        <UserDetails>
+          <UserInfo>
+            <Message>Bem vindo,</Message>
+            <UserName>{user.name}</UserName>
+          </UserInfo>
+
+          <LogoutMessage>
+            <LogoutIcon />
+          </LogoutMessage>
+        </UserDetails>
+
+        <PageContent>
+          <Title>{pageTitle}</Title>
+          <LocaleDetails>
+            <LocaleIcon />
+            <Locale>Salvador, BA</Locale>
+          </LocaleDetails>
+        </PageContent>
+      </Content>
+    </Container>
+  );
+};

@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useQuery } from 'react-query';
-
-import axios from 'axios';
+import { useQueryClient } from 'react-query';
 import {
   Container,
   Content,
@@ -13,52 +11,42 @@ import {
 } from './styles';
 
 import { PackageCard } from '../../components/PackageCard';
-
+import { useGetCurrentUserPackages } from '../../services/gql/queries/userGetuserPackages';
+import { useCreatePackage } from '../../services/gql/mutations/useCreatePackage';
 import FindIcon from '../../assets/find.svg';
-import { getPackageStatus } from '../../services/api';
-import {
-  Package,
-  packageRepository,
-} from '../../services/database/package.repository';
-import { useNotifications } from '../../hooks/useNotifications';
 import { Navbar } from '../../components/Navbar';
+
+export type Package = {
+  code: string;
+  id: string;
+  name: string;
+  departureData: string;
+  eventDate: string;
+  eventHour: string;
+  status: string;
+};
 
 export const Home: React.FC = () => {
   const [input, setInput] = useState('');
-  const [packages, setPackages] = useState<Package[]>([]);
-  const [loading, setLoading] = useState(false);
-  const { schedulePushNotification } = useNotifications();
-
   const inputRef = useRef(null);
 
+  const { data: packages, isLoading } = useGetCurrentUserPackages();
+  const createPackage = useCreatePackage();
+
+  if (isLoading) {
+    return null;
+  }
+
   const handleSubmit = async () => {
-    try {
-      if (!input) return;
+    if (!createPackage.isLoading) return;
 
-      setLoading(true);
+    await createPackage.mutateAsync({
+      code: input,
+    });
 
-      const response = await getPackageStatus({
-        code: input,
-        type: 'LS',
-      });
+    const client = useQueryClient();
 
-      const data = response.objeto[0].evento[0];
-
-      const newPackage = await packageRepository.savePackage({
-        code: input,
-        departureData: String(data.dataPostagem),
-        name: 'LS',
-        status: data.descricao,
-      });
-
-      setPackages((old) => [...old, newPackage]);
-
-      setInput('');
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
+    await client.invalidateQueries('getCurrentUserPackagesRequest');
   };
 
   return (
@@ -79,14 +67,14 @@ export const Home: React.FC = () => {
           </InputField>
 
           <PackageCount>
-            {packages.length
-              ? `${packages.length} pacote (s)`
+            {packages
+              ? `${(packages as any).length} pacote(s)`
               : 'Não há pacotes'}
           </PackageCount>
 
           <PackageList
-            keyExtractor={(item) => item.id}
-            data={packages}
+            keyExtractor={(item) => item.id || item.code}
+            data={packages as Package[]}
             renderItem={({ item }) => <PackageCard packageData={item} />}
           />
         </Content>

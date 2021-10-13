@@ -49,6 +49,14 @@ export const Status = styled.Text`
   text-align: center;
 `;
 
+export const StatusDate = styled.Text`
+  margin-top: 5px;
+
+  color: ${({ theme }) => theme.colors.gray400};
+  font-size: ${({ theme }) => theme.utils.RFValue(12)};
+  text-align: center;
+`;
+
 export const Footer = styled.View`
   height: 55px;
   background-color: ${({ theme }) => theme.colors.yellow300};

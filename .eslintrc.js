@@ -30,5 +30,6 @@ module.exports = {
     'no-undef': 'off',
     camelcase: 'off',
     'require-default-props': 'off',
+    'no-underscore-dangle': 'off',
   },
 };

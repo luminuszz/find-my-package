@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { Dimensions, FlatList } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import { Package } from '../../services/database/package.repository';
+import { Package } from '.';
 
 export const Container = styled.View`
   width: 100%;

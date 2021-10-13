@@ -27,6 +27,7 @@ export const Message = styled.Text`
 `;
 
 export const UserName = styled.Text`
+  text-transform: capitalize;
   font-family: ${({ theme }) => theme.fonts.inter.regular};
   color: ${({ theme }) => theme.colors.purple300};
   font-size: ${({ theme }) => theme.utils.RFValue(15)};

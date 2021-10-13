@@ -1,7 +1,6 @@
 import React from 'react';
 
 import PackageIcon from '../../assets/Package.svg';
-import { Package } from '../../services/database/package.repository';
 
 import {
   Container,
@@ -15,7 +14,18 @@ import {
   Icon,
   Name,
   PackAgeDetails,
+  StatusDate,
 } from './styles';
+
+type Package = {
+  code: string;
+  id: string;
+  name: string;
+  departureData: string;
+  eventDate: string;
+  eventHour: string;
+  status: string;
+};
 
 interface Props {
   packageData: Package;
@@ -33,6 +43,7 @@ export const PackageCard: React.FC<Props> = ({ packageData }) => (
       </Info>
 
       <Status>{packageData.status}</Status>
+      <StatusDate>{packageData.eventDate}</StatusDate>
     </Content>
 
     <Footer>

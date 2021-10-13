@@ -27,18 +27,22 @@ import {
   ForgotPassword,
 } from './styles';
 import { Button } from '../../../components/Button';
+import { useAuth } from '../../../hooks/useAuth';
 
 export const Login: React.FC = () => {
+  const { login } = useAuth();
   const navigation = useNavigation<StackRoute.Public<'Login'>>();
-  const [isKeyboardOpen, setIsKeyBoardOpen] = useState(false);
   const [form, setForm] = useState({
-    cpf: '',
+    email: '',
     password: '',
     remember: false,
   });
+  const [isKeyboardOpen, setIsKeyBoardOpen] = useState(false);
 
   const handleChange = (name: keyof typeof form, value: any) =>
     setForm((old) => ({ ...old, [name]: value }));
+
+  const handleSubmit = async () => login(form.email, form.password);
 
   useEffect(() => {
     Keyboard.addListener('keyboardDidShow', () => setIsKeyBoardOpen(true));
@@ -49,6 +53,7 @@ export const Login: React.FC = () => {
       Keyboard.removeAllListeners('keyboardDidHide');
     };
   }, []);
+
   return (
     <Container>
       <Content>
@@ -73,11 +78,11 @@ export const Login: React.FC = () => {
 
         <FormContent keyboardIsOpen={isKeyboardOpen}>
           <Input
-            value={form.cpf}
-            onChangeText={(value) => handleChange('cpf', value)}
+            value={form.email}
+            onChangeText={(value) => handleChange('email', value)}
             icon={UserICon}
-            placeholder="CPF"
-            keyboardType="numeric"
+            placeholder="Email"
+            keyboardType="email-address"
           />
 
           <PasswordInput
@@ -100,7 +105,7 @@ export const Login: React.FC = () => {
             </ForgotPassword>
           </ActionsForm>
 
-          <Button>Entrar</Button>
+          <Button onPress={handleSubmit}>Entrar</Button>
         </FormContent>
       </Content>
     </Container>
