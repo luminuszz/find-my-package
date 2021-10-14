@@ -24,7 +24,7 @@ interface Props {
 }
 
 export const Navbar: React.FC<Props> = ({ pageTitle }) => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const [location, setLocation] = useState(null);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export const Navbar: React.FC<Props> = ({ pageTitle }) => {
             <UserName>{user.name}</UserName>
           </UserInfo>
 
-          <LogoutMessage>
+          <LogoutMessage onPress={logout}>
             <LogoutIcon />
           </LogoutMessage>
         </UserDetails>

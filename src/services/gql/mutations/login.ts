@@ -1,5 +1,5 @@
-import { useMutation, UseMutationOptions } from 'react-query';
-import { gql, client, GqlResponse } from '../index';
+import { useMutation } from 'react-query';
+import { gql, client } from '../index';
 
 type LoginResponse = {
   login: {
@@ -10,11 +10,18 @@ type LoginResponse = {
 type LoginRequest = {
   email: string;
   password: string;
+  appToken: any;
 };
 
 const LOGIN_MUTATION = gql`
-  mutation Login($email: String!, $password: String!) {
-    login(createSession: { email: $email, password: $password }) {
+  mutation Login(
+    $email: String!
+    $password: String!
+    $appToken: AppTokenInput!
+  ) {
+    login(
+      createSession: { email: $email, password: $password, appToken: $appToken }
+    ) {
       token
     }
   }
@@ -24,6 +31,7 @@ const loginRequest = async (data: LoginRequest) =>
   client.request<LoginResponse, LoginRequest>(LOGIN_MUTATION, {
     email: data.email,
     password: data.password,
+    appToken: data.appToken,
   });
 
 const useLogin = () =>

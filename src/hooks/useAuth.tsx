@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { loginRequest } from '../services/gql/mutations/login';
+import { useLogin } from '../services/gql/mutations/login';
 import { client } from '../services/gql';
 import { getCurrentUserRequest } from '../services/gql/queries/useGetCurrentUser';
 
 type AuthContextProps = {
   login(email: string, password: string): Promise<void>;
+  logout(): Promise<void>;
   user: {
     name: string;
     email: string;
@@ -13,14 +14,25 @@ type AuthContextProps = {
   isLogged: boolean;
 };
 
+type Props = {
+  expoToken: any;
+};
+
 const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
-const AuthProvider: React.FC = ({ children }) => {
+const AuthProvider: React.FC<Props> = ({ children, expoToken }) => {
   const [user, setUser] = useState(null);
+  const { mutateAsync } = useLogin();
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await loginRequest({ email, password });
+      console.log({ expoToken });
+
+      const response = await mutateAsync({
+        email,
+        password,
+        appToken: expoToken,
+      });
 
       client.setHeader('Authorization', `Bearer ${response.login.token}`);
 
@@ -37,8 +49,13 @@ const AuthProvider: React.FC = ({ children }) => {
     }
   };
 
+  const logout = async () => {
+    await AsyncStorage.multiRemove(['token', 'user']);
+    setUser(null);
+  };
+
   useEffect(() => {
-    async function loadStorageData(): Promise<void> {
+    (async () => {
       const [token, user] = await AsyncStorage.multiGet(['token', 'user']);
 
       if (token[1] && user[1]) {
@@ -47,15 +64,12 @@ const AuthProvider: React.FC = ({ children }) => {
 
         setUser(parseUser);
         client.setHeader('Authorization', `Bearer ${parseToken}`);
-
-        console.log(client);
       }
-    }
-    loadStorageData();
+    })();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ login, user, isLogged: !!user }}>
+    <AuthContext.Provider value={{ login, logout, user, isLogged: !!user }}>
       {children}
     </AuthContext.Provider>
   );

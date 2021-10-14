@@ -83,6 +83,8 @@ export const Login: React.FC = () => {
             icon={UserICon}
             placeholder="Email"
             keyboardType="email-address"
+            autoCompleteType="email"
+            autoCapitalize="none"
           />
 
           <PasswordInput
@@ -91,6 +93,7 @@ export const Login: React.FC = () => {
             icon={LockIcon}
             placeholder="Senha"
             keyboardType="default"
+            autoCapitalize="none"
           />
 
           <ActionsForm>

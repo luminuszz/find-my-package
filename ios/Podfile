@@ -18,4 +18,6 @@ target 'findmypackage' do
   #     flipper_post_install(installer)
   #   end
   # end
+  pod 'react-native-onesignal', :path => '../node_modules/react-native-onesignal'
+
 end

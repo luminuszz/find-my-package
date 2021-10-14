@@ -32,21 +32,26 @@ export const Home: React.FC = () => {
 
   const { data: packages, isLoading } = useGetCurrentUserPackages();
   const createPackage = useCreatePackage();
+  const client = useQueryClient();
 
   if (isLoading) {
     return null;
   }
 
   const handleSubmit = async () => {
-    if (!createPackage.isLoading) return;
+    try {
+      if (createPackage.isLoading) return;
 
-    await createPackage.mutateAsync({
-      code: input,
-    });
+      console.log('foi chamado');
 
-    const client = useQueryClient();
+      await createPackage.mutateAsync({
+        code: input,
+      });
 
-    await client.invalidateQueries('getCurrentUserPackagesRequest');
+      await client.invalidateQueries('getCurrentUserPackagesRequest');
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (

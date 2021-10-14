@@ -1,26 +1,23 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components/native';
-import { QueryClient, QueryClientProvider } from 'react-query';
-
+import { QueryClientProvider } from 'react-query';
 import { NavigationContainer } from '@react-navigation/native';
-import { NotificationsProvider } from '../hooks/useNotifications';
+
 import { AuthProvider } from '../hooks/useAuth';
 import { theme } from '../styles/theme';
+import { reactQueryClient } from '../services/reactQuery';
 
-export const AppProvider: React.FC = ({ children }) => {
-  const client = new QueryClient();
-
-  return (
-    <QueryClientProvider client={client}>
-      <AuthProvider>
-        <NotificationsProvider>
-          <ThemeProvider theme={theme}>
-            <StatusBar barStyle="light-content" />
-            <NavigationContainer>{children}</NavigationContainer>
-          </ThemeProvider>
-        </NotificationsProvider>
-      </AuthProvider>
-    </QueryClientProvider>
-  );
-};
+export const AppProvider: React.FC<{ expoToken: any }> = ({
+  children,
+  expoToken,
+}) => (
+  <QueryClientProvider client={reactQueryClient}>
+    <AuthProvider expoToken={expoToken}>
+      <ThemeProvider theme={theme}>
+        <StatusBar barStyle="light-content" />
+        <NavigationContainer>{children}</NavigationContainer>
+      </ThemeProvider>
+    </AuthProvider>
+  </QueryClientProvider>
+);

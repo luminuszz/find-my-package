@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import 'react-native-url-polyfill/auto';
 import { registerRootComponent } from 'expo';
+import { oneSignalInit } from './src/services/pushNotifications';
 
 import App from './src/App';
 
